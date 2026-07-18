@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="TawtAi.Api.Tests/TawtAi.Api.Tests.csproj" />
+  <Project Path="TawtAi.Api/TawtAi.Api.csproj" />
+</Solution>

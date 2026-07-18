@@ -1,0 +1,19 @@
+services:
+  backend:
+    build:
+      context: ./backend/TawtAi.Api
+      dockerfile: Dockerfile
+    ports:
+      - "5188:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - AllowedOrigins__0=http://localhost:4200
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
