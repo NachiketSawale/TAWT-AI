@@ -14,12 +14,12 @@
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Azure Personal Access Token*</mat-label>
+            <mat-label>Azure Personal Access Token</mat-label>
             <input
               matInput
               formControlName="patToken"
               [type]="hideToken() ? 'password' : 'text'"
-              placeholder="Paste your PAT"
+              placeholder="Enter your Azure DevOps PAT"
               autocomplete="off"
             />
             <button
@@ -31,10 +31,13 @@
             >
               <mat-icon>{{ hideToken() ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-            <mat-error *ngIf="form.controls.patToken.hasError('required') && form.controls.patToken.touched">Personal Access Token is required.</mat-error>
+            <mat-error *ngIf="form.controls.patToken.hasError('required') && form.controls.patToken.touched">Please enter your Personal Access Token.</mat-error>
           </mat-form-field>
 
-          <div class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</div>
+          <div class="error-banner" *ngIf="errorMessage()" role="alert">
+            <mat-icon class="error-icon">error_outline</mat-icon>
+            <span>{{ errorMessage() }}</span>
+          </div>
 
           <button
             mat-stroked-button

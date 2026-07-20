@@ -57,12 +57,18 @@ export class LoginComponent {
           this.successMessage.set('Token validated successfully.');
           this.router.navigate(['profile']);
         } else {
-          this.errorMessage.set(response.message ?? 'Authentication failed.');
+          this.errorMessage.set(response.message ?? 'Invalid Personal Access Token. Please check and try again.');
         }
       },
       error: (err) => {
         this.isSubmitting.set(false);
-        this.errorMessage.set(err?.error?.message ?? 'Unable to reach the authentication service.');
+        if (err?.status === 0) {
+          this.errorMessage.set('Unable to reach the authentication service. Please check your connection and try again.');
+        } else if (err?.status === 401 || err?.status === 403) {
+          this.errorMessage.set('Invalid or expired Personal Access Token. Please check and try again.');
+        } else {
+          this.errorMessage.set(err?.error?.message ?? 'Something went wrong while validating the token. Please try again.');
+        }
       }
     });
   }
