@@ -1,0 +1,54 @@
+<div class="login-page">
+  <header class="top-bar">
+    <img src="assets/rib-logo-text.svg" alt="RIB" class="top-bar-logo" />
+    <span class="top-bar-title">Technical Assessments</span>
+  </header>
+
+  <div class="login-backdrop">
+    <mat-card class="login-card">
+      <div class="card-header">
+        <img src="assets/rib-logo-text.svg" alt="RIB" class="card-logo" />
+        <span class="card-version">| 4.0</span>
+      </div>
+
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Azure Personal Access Token*</mat-label>
+            <input
+              matInput
+              formControlName="patToken"
+              [type]="hideToken() ? 'password' : 'text'"
+              placeholder="Paste your PAT"
+              autocomplete="off"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="toggleTokenVisibility($event)"
+              [attr.aria-label]="hideToken() ? 'Show token' : 'Hide token'"
+            >
+              <mat-icon>{{ hideToken() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.controls.patToken.hasError('required') && form.controls.patToken.touched">Personal Access Token is required.</mat-error>
+          </mat-form-field>
+
+          <div class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</div>
+
+          <button
+            mat-stroked-button
+            type="submit"
+            class="full-width submit-button"
+            [disabled]="isSubmitting()"
+          >
+            <mat-spinner *ngIf="isSubmitting()" diameter="20"></mat-spinner>
+            <span *ngIf="!isSubmitting()">Validate Token</span>
+          </button>
+        </form>
+      </mat-card-content>
+
+      <div class="card-footer">v1.0.0.0 / 2026</div>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,157 @@
+$rib-blue: #0b5fa5;
+$rib-blue: #0b5fa5;
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 24px;
+  background: $rib-blue;
+  flex-shrink: 0;
+
+  .top-bar-logo {
+    height: 24px;
+  }
+
+  .top-bar-title {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+}
+
+.login-backdrop {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #1c2b3a 0%, #3a536b 45%, #8fa6b8 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #d6dde6;
+  box-shadow: 0 18px 40px rgba(4,10,18,0.12);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 10px 20px;
+  background: $rib-blue;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  .card-logo {
+    height: 20px;
+  }
+
+  .card-version {
+    color: #fff;
+    font-size: 0.95rem;
+  }
+}
+
+mat-card-content {
+  padding: 18px 20px 14px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-button {
+  height: 44px;
+  margin-top: 8px;
+}
+
+.error-banner {
+  background: #fdecea;
+  color: #b3261e;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+}
+
+.card-footer {
+  padding: 8px 20px 16px;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Material form-field visual tweaks to emulate PAT-Auth-Demo */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  padding: 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  border-radius: 6px;
+  background: #fbfbfc;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 12px 44px 12px 14px;
+}
+
+::ng-deep .mat-form-field.mat-form-field-appearance-outline {
+  background: transparent;
+}
+
+/* place suffix icon nicely */
+::ng-deep .mat-form-field-suffix {
+  margin-right: 6px;
+}
+
+/* validate button look */
+::ng-deep .mat-stroked-button.full-width {
+  width: 100%;
+  border-radius: 26px;
+  border-width: 2px;
+  color: $rib-blue;
+  font-weight: 700;
+  height: 44px;
+}
+
+/* spinner sizing */
+::ng-deep .mat-spinner {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.card-footer {
+  padding: 8px 20px 16px;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+.error-banner {
+  background: #fdecea;
+  color: #b3261e;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+}
