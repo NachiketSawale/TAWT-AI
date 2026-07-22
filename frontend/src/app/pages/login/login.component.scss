@@ -240,7 +240,8 @@ RIGHT PANEL
 }
 
 .login-card{
-    width:500px;
+    width:100%;
+    max-width:500px;
     background:#ffffff;
     border-radius:28px;
     border:none;
@@ -400,6 +401,35 @@ RIGHT PANEL
   color: #0057b8;
 }
 
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 0;
+  color: #b91c1c;
+  font-size: .84rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  color: #b91c1c;
+  font-size: .84rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.error-banner mat-icon {
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
 .validate-btn{
     margin-top:20px;
     height:44px;
@@ -528,6 +558,44 @@ RIGHT PANEL
 
   .header-right {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-container {
+    padding: 0 16px;
+    gap: 24px;
+  }
+
+  .right-panel {
+    padding: 12px 0;
+  }
+
+  .login-section {
+    padding: 16px 0;
+  }
+
+  .login-card {
+    max-width: 100%;
+    border-radius: 20px;
+  }
+
+  .login-card-inner {
+    padding: 24px 20px;
+  }
+
+  .login-badge {
+    width: 60px;
+    height: 60px;
+  }
+
+  .login-title {
+    font-size: 1.3rem;
+  }
+
+  .input-wrapper {
+    height: 54px;
+    padding: 0 14px;
   }
 }
 
