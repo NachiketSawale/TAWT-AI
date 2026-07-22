@@ -26,7 +26,7 @@ describe('App', () => {
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Technical Assessments');
-    expect(compiled.textContent).toContain('Azure Personal Access Token');
+    expect(compiled.textContent).toContain('Technical Assessment Portal');
+    expect(compiled.textContent).toContain('Azure DevOps Personal Access Token');
   });
 });
