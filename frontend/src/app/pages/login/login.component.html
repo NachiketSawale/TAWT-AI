@@ -1,57 +1,163 @@
 <div class="login-page">
-  <header class="top-bar">
-    <img src="assets/rib-logo-text.svg" alt="RIB" class="top-bar-logo" />
-    <span class="top-bar-title">Technical Assessments</span>
+  <!-- Background -->
+  <div class="background-overlay"></div>
+
+  <!-- Header -->
+  <header class="login-header">
+    <div class="logo-section">
+      <img src="/assets/images/rib-logo-text.svg" alt="RIB" class="rib-logo" />
+    </div>
+
+    <div class="header-right">
+      <span>iTWO 4.0</span>
+    </div>
   </header>
 
-  <div class="login-backdrop">
-    <mat-card class="login-card">
-      <div class="card-header">
-        <img src="assets/rib-logo-text.svg" alt="RIB" class="card-logo" />
-        <span class="card-version">| 4.0</span>
-      </div>
+  <!-- Main Layout -->
+  <main class="page-content">
+    <div class="page-container">
+      <!-- LEFT -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1 class="hero-title">Technical Assessment Portal</h1>
 
-      <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Azure Personal Access Token</mat-label>
-            <input
-              matInput
-              formControlName="patToken"
-              [type]="hideToken() ? 'password' : 'text'"
-              placeholder="Enter your Azure DevOps PAT"
-              autocomplete="off"
-            />
-            <button
-              mat-icon-button
-              matSuffix
-              type="button"
-              (click)="toggleTokenVisibility($event)"
-              [attr.aria-label]="hideToken() ? 'Show token' : 'Hide token'"
-            >
-              <mat-icon>{{ hideToken() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-            <mat-error *ngIf="form.controls.patToken.hasError('required') && form.controls.patToken.touched">Please enter your Personal Access Token.</mat-error>
-          </mat-form-field>
+          <!-- <p class="hero-description">
+            Assess technical knowledge using AI-driven question generation,
+            repository intelligence and skill analytics built specifically
+            for RIB engineering teams.
+          </p> -->
 
-          <div class="error-banner" *ngIf="errorMessage()" role="alert">
-            <mat-icon class="error-icon">error_outline</mat-icon>
-            <span>{{ errorMessage() }}</span>
+          <div class="feature-list">
+            <div class="feature-item">
+              <div class="feature-icon">
+                <mat-icon>psychology</mat-icon>
+              </div>
+
+              <div class="feature-content">
+                <h3>AI Assessment</h3>
+
+                <p>Generate AI-powered technical assessments from project modules.</p>
+              </div>
+            </div>
+
+            <div class="feature-divider"></div>
+
+            <div class="feature-item">
+              <div class="feature-icon">
+                <mat-icon>insights</mat-icon>
+              </div>
+
+              <div class="feature-content">
+                <h3>Skill Analytics</h3>
+
+                <p>Identify strengths and learning opportunities.</p>
+              </div>
+            </div>
+
+            <div class="feature-divider"></div>
+
+            <div class="feature-item">
+              <div class="feature-icon">
+                <mat-icon>widgets</mat-icon>
+              </div>
+
+              <div class="feature-content">
+                <h3>Module Expertise</h3>
+
+                <p>Measure your expertise with module-based questions generated from real RIB modules.</p>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <button
-            mat-stroked-button
-            type="submit"
-            class="full-width submit-button"
-            [disabled]="isSubmitting()"
-          >
-            <mat-spinner *ngIf="isSubmitting()" diameter="20"></mat-spinner>
-            <span *ngIf="!isSubmitting()">Validate Token</span>
-          </button>
-        </form>
-      </mat-card-content>
+      <!-- RIGHT -->
+      <section class="right-panel">
+        <div class="login-card">
+          <div class="login-card-inner">
+            <div class="login-badge">
+              <mat-icon>lock_person</mat-icon>
+            </div>
 
-      <div class="card-footer">v1.0.0.0 / 2026</div>
-    </mat-card>
-  </div>
+            <h2 class="login-title">
+              Access Your Assessment Portal
+            </h2>
+
+            <p class="login-subtitle">
+              Sign in using your Azure DevOps Personal Access Token
+            </p>
+
+            <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+              <label class="field-label">
+                Personal Access Token (PAT)
+              </label>
+
+              <div class="input-wrapper">
+                <mat-icon class="input-icon">
+                  vpn_key
+                </mat-icon>
+
+                <input
+                  formControlName="patToken"
+                  [type]="hideToken() ? 'password' : 'text'"
+                  placeholder="Paste your Personal Access Token"
+                  autocomplete="off"
+                />
+
+                <button
+                  class="visibility-btn"
+                  type="button"
+                  (click)="toggleTokenVisibility($event)"
+                  [attr.aria-label]="hideToken() ? 'Show token' : 'Hide token'"
+                >
+                  <mat-icon>
+                    {{ hideToken() ? 'visibility_off' : 'visibility' }}
+                  </mat-icon>
+                </button>
+              </div>
+
+              <p class="field-error" *ngIf="form.controls.patToken.hasError('required') && form.controls.patToken.touched">
+                Please enter your Personal Access Token.
+              </p>
+
+              <a class="pat-link" href="#">
+                <mat-icon>help_outline</mat-icon>
+                <span>How do I get a PAT token?</span>
+              </a>
+
+              <div class="error-banner" *ngIf="errorMessage()" role="alert">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ errorMessage() }}</span>
+              </div>
+
+              <button class="validate-btn" type="submit" [disabled]="isSubmitting()">
+                <mat-spinner *ngIf="isSubmitting()" diameter="20"></mat-spinner>
+                <ng-container *ngIf="!isSubmitting()">
+                  <mat-icon>verified_user</mat-icon>
+                  <span>Validate Token &amp; Continue</span>
+                </ng-container>
+              </button>
+
+              <div class="divider">
+                <span></span>
+                <p>OR</p>
+                <span></span>
+              </div>
+
+              <button class="microsoft-btn" type="button" (click)="signInWithMicrosoft()">
+                <svg class="ms-logo" viewBox="0 0 21 21" width="18" height="18">
+                  <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+                  <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+                  <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+                  <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+                </svg>
+
+                <span>Continue with Microsoft</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 </div>

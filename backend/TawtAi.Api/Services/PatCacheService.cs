@@ -15,7 +15,7 @@ public class PatCacheService : IPatCacheService
 
     public void Store(string userId, string patToken, DateTime expiresAtUtc)
     {
-        _cache.Set(KeyPrefix + userId, patToken, expiresAtUtc);
+        _cache.Set(KeyPrefix + userId, patToken, new DateTimeOffset(expiresAtUtc));
     }
 
     public string? Get(string userId)

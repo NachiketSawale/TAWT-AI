@@ -1,21 +1,20 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { PatLoginResponse } from '../../models/auth.model';
+import { AuthService } from '../../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, NgIf, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatTooltipModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -26,8 +25,7 @@ export class LoginComponent {
   readonly successMessage = signal<string | null>(null);
 
   readonly form;
-  constructor(private readonly fb: FormBuilder, private readonly router: Router, private readonly http: HttpClient) {
-    // Do not resolve AuthService at field initialization time to avoid compiler injection issues.
+  constructor(private readonly fb: FormBuilder, private readonly router: Router, private readonly authService: AuthService) {
     this.form = this.fb.group({
       patToken: ['', [Validators.required]]
     });
@@ -36,6 +34,10 @@ export class LoginComponent {
   toggleTokenVisibility(event: MouseEvent): void {
     event.preventDefault();
     this.hideToken.update((value) => !value);
+  }
+
+  signInWithMicrosoft(): void {
+    this.errorMessage.set('Microsoft SSO is not configured yet. Please sign in with your Personal Access Token.');
   }
 
   submit(): void {
@@ -50,7 +52,7 @@ export class LoginComponent {
 
     const { patToken } = this.form.getRawValue();
 
-    this.http.post<PatLoginResponse>(`${environment.apiUrl}/api/Auth/login`, { patToken: patToken ?? '' }).subscribe({
+    this.authService.login({ patToken: patToken ?? '' }).subscribe({
       next: (response) => {
         this.isSubmitting.set(false);
         if (response.success) {

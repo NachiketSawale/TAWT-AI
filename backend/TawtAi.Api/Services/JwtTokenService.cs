@@ -20,6 +20,12 @@ public class JwtTokenService : IJwtTokenService
 
     public (string Token, DateTime ExpiresAtUtc) GenerateToken(AzureDevOpsProfile profile, string organization)
     {
+        if (string.IsNullOrWhiteSpace(_settings.Key))
+        {
+            throw new InvalidOperationException(
+                "Jwt:Key is not configured. Set it via the ASPNETCORE environment/user-secrets before issuing tokens.");
+        }
+
         var expiresAtUtc = DateTime.UtcNow.AddMinutes(_settings.ExpiryMinutes);
 
         var claims = new List<Claim>
