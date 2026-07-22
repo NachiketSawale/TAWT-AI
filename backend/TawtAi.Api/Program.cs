@@ -29,6 +29,8 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddSingleton<IPatCacheService, PatCacheService>();
 builder.Services.AddScoped<AuthAppService>();
 
+builder.Services.AddAuthorization();
+
 var jwtSettings = builder.Configuration.GetSection(JwtSettings.SectionName).Get<JwtSettings>();
 if (jwtSettings is not null && !string.IsNullOrWhiteSpace(jwtSettings.Key))
 {
@@ -46,6 +48,12 @@ if (jwtSettings is not null && !string.IsNullOrWhiteSpace(jwtSettings.Key))
                 ValidateLifetime = true
             };
         });
+}
+else
+{
+    // Register authentication services without a default scheme so UseAuthentication()
+    // does not fail while Jwt:Key is unset (e.g. local dev without user-secrets configured).
+    builder.Services.AddAuthentication();
 }
 
 builder.Services.AddCors(options =>

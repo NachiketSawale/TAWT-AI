@@ -170,16 +170,21 @@ FEATURE LIST
 }
 
 .feature-icon {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: linear-gradient(135deg,#0A6ED1,#005DAA);
 }
 
 .feature-icon mat-icon {
   color: #ffffff;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
 }
 
 .feature-content h3 {
@@ -202,42 +207,6 @@ FEATURE LIST
   background: rgba(255,255,255,.12);
   width: 92%;
   margin-left: 68px;
-}
-
-.feature-card:hover {
-  transform: translateY(-8px);
-  background: rgba(255,255,255,.14);
-  border-color: rgba(255,255,255,.28);
-  box-shadow: 0 24px 45px rgba(0,0,0,.18);
-}
-
-.feature-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg,#0A6ED1,#005DAA);
-  flex-shrink: 0;
-}
-
-.feature-icon mat-icon {
-  font-size: 22px;
-  width: 22px;
-  height: 22px;
-}
-
-.feature-card h3 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.feature-card p {
-  margin: 0;
-  line-height: 1.55;
-  color: rgba(255,255,255,.82);
 }
 
 /*========================================*/
