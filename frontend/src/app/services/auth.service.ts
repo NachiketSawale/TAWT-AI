@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthSession, PatLoginRequest, PatLoginResponse } from '../models/auth.model';
@@ -8,15 +8,27 @@ const STORAGE_KEY = 'app-auth.session';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private readonly http = inject(HttpClient);
+
   private readonly sessionSignal = signal<AuthSession | null>(this.loadSession());
 
   readonly session = this.sessionSignal.asReadonly();
 
-  constructor(private readonly http: HttpClient) {}
+  constructor() {
+    effect((onCleanup) => {
+      const session = this.sessionSignal();
+      if (!session) {
+        return;
+      }
+      const ms = new Date(session.expiresAtUtc).getTime() - Date.now();
+      const timer = setTimeout(() => this.logout(), Math.max(ms, 0));
+      onCleanup(() => clearTimeout(timer));
+    });
+  }
 
   login(request: PatLoginRequest): Observable<PatLoginResponse> {
-    // Ensure API path includes the '/api' prefix used by the backend controllers
-    return this.http.post<PatLoginResponse>(`${environment.apiUrl}/api/Auth/login`, request).pipe(
+    // Ensure API path includes the '/api/v1' prefix used by the backend controllers
+    return this.http.post<PatLoginResponse>(`${environment.apiUrl}/api/v1/Auth/login`, request).pipe(
       tap((response) => {
         if (response.success && response.accessToken && response.expiresAtUtc) {
           const session: AuthSession = {

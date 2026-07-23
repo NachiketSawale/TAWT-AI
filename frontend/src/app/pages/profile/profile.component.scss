@@ -1,18 +1,19 @@
-$bg-dark: #0f172a;
-$card-bg: #ffffff;
+@use '../../../brand' as brand;
+
+$card-bg: brand.$brand-surface;
 $card-border: #e6eef8;
-$primary: #1f6feb;
+$primary: brand.$brand-primary;
 
 .profile-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(135deg, brand.$brand-primary-dark 0%, brand.$brand-primary 100%);
 }
 
 .top-bar {
   padding: 16px 24px;
-  background: $bg-dark;
+  background: brand.$brand-primary-dark;
   color: #f8fafc;
   font-size: 1.1rem;
   font-weight: 600;

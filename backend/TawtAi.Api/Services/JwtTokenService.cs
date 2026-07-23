@@ -9,14 +9,9 @@ using TawtAi.Api.Settings;
 
 namespace TawtAi.Api.Services;
 
-public class JwtTokenService : IJwtTokenService
+public class JwtTokenService(IOptions<JwtSettings> settings) : IJwtTokenService
 {
-    private readonly JwtSettings _settings;
-
-    public JwtTokenService(IOptions<JwtSettings> settings)
-    {
-        _settings = settings.Value;
-    }
+    private readonly JwtSettings _settings = settings.Value;
 
     public (string Token, DateTime ExpiresAtUtc) GenerateToken(AzureDevOpsProfile profile, string organization)
     {

@@ -2,6 +2,8 @@
    RIB LOGIN DESIGN SYSTEM
 ================================ */
 
+@use '../../../brand' as brand;
+
 :host {
   display: block;
 }
@@ -9,7 +11,7 @@
 /* ---------- Variables ---------- */
 
 $header-height: 82px;
-$primary: #005daa;
+$primary: brand.$brand-primary;
 $overlay-dark: rgba(7, 30, 60, 0.72);
 $overlay-light: rgba(7, 30, 60, 0.35);
 
@@ -130,27 +132,6 @@ $overlay-light: rgba(7, 30, 60, 0.35);
     margin:0 0 32px;
 }
 
-.hero-description {
-  margin-top: 18px;
-  margin-bottom: 32px;
-  max-width: 560px;
-  font-size: 1.08rem;
-  line-height: 1.8;
-  color: rgba(255,255,255,.86);
-}
-
-.login-illustration{
-    display:flex;
-    justify-content:center;
-    margin-bottom:22px;
-}
-
-.login-illustration img{
-    width:130px;
-    height:130px;
-    object-fit:contain;
-}
-
 /*========================================*/
 
 /*===============================
@@ -232,14 +213,9 @@ RIGHT PANEL
   }
 }
 
-.login-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 60px;
-}
-
 .login-card{
+    position:relative;
+    overflow:hidden;
     width:100%;
     max-width:500px;
     background:#ffffff;
@@ -289,7 +265,7 @@ RIGHT PANEL
     font-size:32px;
     width:32px;
     height:32px;
-    color:#0b6fd4;
+    color:brand.$brand-accent;
 }
 
 .login-title{
@@ -336,7 +312,7 @@ RIGHT PANEL
 }
 
 .input-wrapper:focus-within {
-    border-color: #0b6fd4;
+    border-color: brand.$brand-accent;
     box-shadow:
         0 0 0 4px rgba(11,111,212,.15);
     background: #ffffff;
@@ -383,7 +359,7 @@ RIGHT PANEL
   gap: 6px;
   margin-top: 14px;
   align-self: flex-start;
-  color: #0b6fd4;
+  color: brand.$brand-accent;
   font-size: .84rem;
   font-weight: 500;
   text-decoration: none;
@@ -435,7 +411,7 @@ RIGHT PANEL
     height:44px;
     border:none;
     border-radius:16px;
-    background:#0a3d8f;
+    background:brand.$brand-primary-dark;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -502,27 +478,6 @@ RIGHT PANEL
     flex-shrink:0;
 }
 
-.security-note{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    margin-top:24px;
-    padding:14px 16px;
-    border-radius:14px;
-    background:rgba(11,111,212,.08);
-    color:rgba(15,27,45,.75);
-    font-size:.84rem;
-    line-height:1.5;
-}
-
-.security-note mat-icon{
-    flex-shrink:0;
-    font-size:20px;
-    width:20px;
-    height:20px;
-    color:#0b6fd4;
-}
-
 /* ================================
    Responsive
 ================================ */
@@ -540,10 +495,6 @@ RIGHT PANEL
 
   .hero-section {
     display: none;
-  }
-
-  .login-section {
-    padding: 32px;
   }
 }
 
@@ -571,10 +522,6 @@ RIGHT PANEL
     padding: 12px 0;
   }
 
-  .login-section {
-    padding: 16px 0;
-  }
-
   .login-card {
     max-width: 100%;
     border-radius: 20px;
@@ -596,16 +543,5 @@ RIGHT PANEL
   .input-wrapper {
     height: 54px;
     padding: 0 14px;
-  }
-}
-
-@keyframes cardEnter {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

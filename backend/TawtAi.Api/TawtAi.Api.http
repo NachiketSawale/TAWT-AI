@@ -1,6 +1,6 @@
 @TawtAi.Api_HostAddress = http://localhost:5188
 
-GET {{TawtAi.Api_HostAddress}}/weatherforecast/
+GET {{TawtAi.Api_HostAddress}}/health
 Accept: application/json
 
 ###

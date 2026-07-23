@@ -8,6 +8,8 @@ public class AzureDevOpsSettings
     public string OrganizationBaseUrl { get; set; } = "https://dev.azure.com/";
     public string ApiVersion { get; set; } = "7.1";
     public string Organization { get; set; } = string.Empty;
+
+    // Reserved for the repo-scanning/assessment-generation feature (not yet implemented).
     public string Project { get; set; } = string.Empty;
     public string Repository { get; set; } = string.Empty;
     public string DefaultBranch { get; set; } = "master";

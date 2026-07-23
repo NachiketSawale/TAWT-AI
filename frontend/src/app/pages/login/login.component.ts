@@ -1,6 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
@@ -14,30 +13,28 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatTooltipModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatTooltipModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+
   readonly hideToken = signal(true);
   readonly isSubmitting = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly successMessage = signal<string | null>(null);
 
-  readonly form;
-  constructor(private readonly fb: FormBuilder, private readonly router: Router, private readonly authService: AuthService) {
-    this.form = this.fb.group({
-      patToken: ['', [Validators.required]]
-    });
-  }
+  readonly form = this.fb.group({
+    patToken: ['', [Validators.required]]
+  });
 
   toggleTokenVisibility(event: MouseEvent): void {
     event.preventDefault();
     this.hideToken.update((value) => !value);
-  }
-
-  signInWithMicrosoft(): void {
-    this.errorMessage.set('Microsoft SSO is not configured yet. Please sign in with your Personal Access Token.');
   }
 
   submit(): void {

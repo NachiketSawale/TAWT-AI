@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using TawtAi.Api.Interfaces;
 using TawtAi.Api.Models;
@@ -17,16 +18,20 @@ const string FrontendCorsPolicy = "FrontendCorsPolicy";
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddProblemDetails();
 
 builder.Services.Configure<AzureDevOpsSettings>(builder.Configuration.GetSection(AzureDevOpsSettings.SectionName));
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.SectionName));
 
-builder.Services.AddMemoryCache();
-builder.Services.AddHttpClient(nameof(AzureDevOpsAuthService));
+builder.Services.AddHttpClient(nameof(AzureDevOpsAuthService))
+    .AddStandardResilienceHandler(options =>
+    {
+        options.Retry.MaxRetryAttempts = 2;
+        options.AttemptTimeout.Timeout = TimeSpan.FromSeconds(10);
+    });
 
 builder.Services.AddScoped<IAzureDevOpsAuthService, AzureDevOpsAuthService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-builder.Services.AddSingleton<IPatCacheService, PatCacheService>();
 builder.Services.AddScoped<AuthAppService>();
 
 builder.Services.AddAuthorization();
@@ -49,6 +54,10 @@ if (jwtSettings is not null && !string.IsNullOrWhiteSpace(jwtSettings.Key))
             };
         });
 }
+else if (builder.Environment.IsProduction())
+{
+    throw new InvalidOperationException("Jwt:Key must be configured in Production.");
+}
 else
 {
     // Register authentication services without a default scheme so UseAuthentication()
@@ -66,7 +75,20 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("login", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 5;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueLimit = 0;
+    });
+});
+
 var app = builder.Build();
+
+app.UseExceptionHandler();
+app.UseStatusCodePages();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -74,38 +96,30 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.Use(async (ctx, next) =>
+    {
+        ctx.Response.Headers.Append("Content-Security-Policy",
+            "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'");
+        ctx.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+        ctx.Response.Headers.Append("X-Frame-Options", "DENY");
+        ctx.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
+        await next();
+    });
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 app.UseCors(FrontendCorsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 
 app.MapControllers();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
 
 public partial class Program;
