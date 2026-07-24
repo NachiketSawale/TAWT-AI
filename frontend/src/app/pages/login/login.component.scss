@@ -1,0 +1,547 @@
+/* ================================
+   RIB LOGIN DESIGN SYSTEM
+================================ */
+
+@use '../../../brand' as brand;
+
+:host {
+  display: block;
+}
+
+/* ---------- Variables ---------- */
+
+$header-height: 82px;
+$primary: brand.$brand-primary;
+$overlay-dark: rgba(7, 30, 60, 0.72);
+$overlay-light: rgba(7, 30, 60, 0.35);
+
+/* ---------- Reset ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-image:
+    linear-gradient(
+      90deg,
+      $overlay-dark 0%,
+      rgba(7, 30, 60, 0.55) 28%,
+      rgba(7, 30, 60, 0.4) 55%,
+      $overlay-light 100%
+    ),
+    url('/assets/images/construction-bg.png');
+  background-size: cover;
+  background-position: center left;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Overlay */
+
+.background-overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+}
+
+/* ================================
+   HEADER
+================================ */
+
+.login-header {
+  position: relative;
+  z-index: 20;
+  height: $header-height;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 72px;
+  background: $primary;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.rib-logo {
+  height: 38px;
+  width: auto;
+}
+
+.header-right {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+/* ================================
+   LAYOUT
+================================ */
+
+.page-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  // grid-template-columns: 58% 42%;
+  min-height: calc(100vh - #{$header-height});
+}
+
+.page-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 45%;
+  align-items: center; // Important
+  gap: 56px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 55px;
+}
+
+/*==================================================
+ HERO SECTION
+==================================================*/
+
+.hero-content {
+  max-width: 720px;
+  color: white;
+  padding-top: 24px;
+  animation: fadeUp .8s ease;
+}
+
+.hero-section{
+    display:flex;
+    justify-content:center;
+    padding-left:0px;
+    padding-right:40px;
+}
+
+.hero-title{
+    font-size:4.0rem;
+    line-height:1.05;
+    font-weight:800;
+    letter-spacing:-2px;
+    margin:0 0 32px;
+}
+
+/*========================================*/
+
+/*===============================
+FEATURE LIST
+===============================*/
+
+.feature-list {
+  margin-top: 42px;
+  max-width: 620px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 0;
+}
+
+.feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: linear-gradient(135deg,#0A6ED1,#005DAA);
+}
+
+.feature-icon mat-icon {
+  color: #ffffff;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.feature-content h3 {
+  margin: 0;
+  color: white;
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+
+.feature-content p {
+  margin-top: 8px;
+  margin-bottom: 0;
+  color: rgba(255,255,255,.78);
+  line-height: 1.7;
+  font-size: .95rem;
+}
+
+.feature-divider {
+  height: 1px;
+  background: rgba(255,255,255,.12);
+  width: 92%;
+  margin-left: 68px;
+}
+
+/*========================================*/
+/*==================================================
+RIGHT PANEL
+==================================================*/
+
+.right-panel{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px 50px;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.login-card{
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    max-width:500px;
+    background:#ffffff;
+    border-radius:28px;
+    border:none;
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.20);
+}
+
+.login-card:hover{
+    transform:translateY(-5px);
+    box-shadow:
+        0 40px 90px rgba(0,0,0,.35);
+}
+
+.login-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        180deg,
+        rgba(255,255,255,.22),
+        rgba(255,255,255,.05)
+    );
+    pointer-events:none;
+}
+
+.login-card-inner{
+    position:relative;
+    z-index:2;
+    padding:32px;
+    text-align:center;
+}
+
+.login-badge{
+    width:72px;
+    height:72px;
+    margin:0 auto 10px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(11,111,212,.10);
+}
+
+.login-badge mat-icon{
+    font-size:32px;
+    width:32px;
+    height:32px;
+    color:brand.$brand-accent;
+}
+
+.login-title{
+    color:#0f1b2d;
+    font-size:1.6rem;
+    font-weight:700;
+    margin:0 0 12px;
+}
+
+.login-subtitle{
+    color:rgba(15,27,45,.60);
+    line-height:1.7;
+    font-size:.92rem;
+    margin-bottom:30px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.field-label {
+  color: #0f1b2d;
+  font-size: .88rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 60px;
+  padding: 0 18px;
+  border-radius: 16px;
+  background: #f4f6f9;
+  border: 1px solid rgba(15,27,45,.12);
+  transition: .25s;
+}
+
+.input-wrapper:hover {
+  border-color: rgba(15,27,45,.24);
+}
+
+.input-wrapper:focus-within {
+    border-color: brand.$brand-accent;
+    box-shadow:
+        0 0 0 4px rgba(11,111,212,.15);
+    background: #ffffff;
+}
+
+.input-wrapper input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: #0f1b2d;
+  font-size: .96rem;
+}
+
+.input-wrapper input::placeholder {
+  color: rgba(15,27,45,.45);
+}
+
+.input-icon {
+  color: rgba(15,27,45,.55);
+}
+
+.visibility-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: rgba(15,27,45,.55);
+  transition: .2s;
+}
+
+.visibility-btn:hover {
+  background: rgba(15,27,45,.06);
+}
+
+.pat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  align-self: flex-start;
+  color: brand.$brand-accent;
+  font-size: .84rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: .25s;
+}
+
+.pat-link mat-icon {
+  font-size: 17px;
+  width: 17px;
+  height: 17px;
+}
+
+.pat-link:hover {
+  text-decoration: underline;
+  color: #0057b8;
+}
+
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 0;
+  color: #b91c1c;
+  font-size: .84rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  color: #b91c1c;
+  font-size: .84rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.error-banner mat-icon {
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.validate-btn{
+    margin-top:20px;
+    height:44px;
+    border:none;
+    border-radius:16px;
+    background:brand.$brand-primary-dark;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:white;
+    font-size:.95rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.validate-btn mat-icon{
+    font-size:20px;
+    width:20px;
+    height:20px;
+}
+
+.validate-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 12px 30px rgba(10,61,143,.35);
+}
+
+.divider{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:18px 0;
+}
+
+.divider span{
+    flex:1;
+    height:1px;
+    background:rgba(15,27,45,.12);
+}
+
+.divider p{
+    margin:0;
+    color:rgba(15,27,45,.45);
+    font-size:.72rem;
+    letter-spacing:.08em;
+}
+
+.microsoft-btn{
+    height:46px;
+    width:100%;
+    border-radius:16px;
+    background:#ffffff;
+    border:1px solid rgba(15,27,45,.16);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    color:#0f1b2d;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.microsoft-btn:hover{
+    background:#f4f6f9;
+}
+
+.ms-logo{
+    flex-shrink:0;
+}
+
+/* ================================
+   Responsive
+================================ */
+
+@media (max-width: 1400px) {
+  .page-content {
+    grid-template-columns: 55% 45%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .page-content {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-section {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-header {
+    padding: 0 24px;
+  }
+
+  .rib-logo {
+    height: 28px;
+  }
+
+  .header-right {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-container {
+    padding: 0 16px;
+    gap: 24px;
+  }
+
+  .right-panel {
+    padding: 12px 0;
+  }
+
+  .login-card {
+    max-width: 100%;
+    border-radius: 20px;
+  }
+
+  .login-card-inner {
+    padding: 24px 20px;
+  }
+
+  .login-badge {
+    width: 60px;
+    height: 60px;
+  }
+
+  .login-title {
+    font-size: 1.3rem;
+  }
+
+  .input-wrapper {
+    height: 54px;
+    padding: 0 14px;
+  }
+}

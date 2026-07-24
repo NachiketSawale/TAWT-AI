@@ -1,0 +1,16 @@
+<div class="profile-page">
+  <header class="top-bar">
+    <span class="top-bar-title">Welcome</span>
+  </header>
+
+  <main class="profile-backdrop">
+    <div class="profile-card">
+      <div class="card-content">
+        <h2>Hello, {{ displayName() }}</h2>
+        <p class="subtext">You are now logged in.</p>
+
+        <button class="logout-button" (click)="logout()">Log out</button>
+      </div>
+    </div>
+  </main>
+</div>

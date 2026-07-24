@@ -1,0 +1,164 @@
+<div class="login-page">
+  <!-- Background -->
+  <div class="background-overlay"></div>
+
+  <!-- Header -->
+  <header class="login-header">
+    <div class="logo-section">
+      <img src="/assets/images/rib-logo-text.svg" alt="RIB" class="rib-logo" />
+    </div>
+
+    <div class="header-right">
+      <span>iTWO 4.0</span>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <main class="page-content">
+    <div class="page-container">
+      <!-- LEFT -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1 class="hero-title">Technical Assessment Portal</h1>
+
+          <div class="feature-list">
+            <div class="feature-item">
+              <div class="feature-icon">
+                <mat-icon aria-hidden="true">psychology</mat-icon>
+              </div>
+
+              <div class="feature-content">
+                <h3>AI Assessment</h3>
+
+                <p>Generate AI-powered technical assessments from project modules.</p>
+              </div>
+            </div>
+
+            <div class="feature-divider"></div>
+
+            <div class="feature-item">
+              <div class="feature-icon">
+                <mat-icon aria-hidden="true">insights</mat-icon>
+              </div>
+
+              <div class="feature-content">
+                <h3>Skill Analytics</h3>
+
+                <p>Identify strengths and learning opportunities.</p>
+              </div>
+            </div>
+
+            <div class="feature-divider"></div>
+
+            <div class="feature-item">
+              <div class="feature-icon">
+                <mat-icon aria-hidden="true">widgets</mat-icon>
+              </div>
+
+              <div class="feature-content">
+                <h3>Module Expertise</h3>
+
+                <p>Measure your expertise with module-based questions generated from real RIB modules.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT -->
+      <section class="right-panel">
+        <div class="login-card">
+          <div class="login-card-inner">
+            <div class="login-badge">
+              <mat-icon aria-hidden="true">lock_person</mat-icon>
+            </div>
+
+            <h2 class="login-title">
+              Access Your Assessment Portal
+            </h2>
+
+            <p class="login-subtitle">
+              Sign in using your Azure DevOps Personal Access Token
+            </p>
+
+            <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+              <label class="field-label" for="patToken">
+                Personal Access Token (PAT)
+              </label>
+
+              <div class="input-wrapper">
+                <mat-icon class="input-icon" aria-hidden="true">
+                  vpn_key
+                </mat-icon>
+
+                <input
+                  id="patToken"
+                  formControlName="patToken"
+                  [type]="hideToken() ? 'password' : 'text'"
+                  placeholder="Paste your Personal Access Token"
+                  autocomplete="off"
+                  [attr.aria-describedby]="form.controls.patToken.invalid ? 'patTokenError' : null"
+                />
+
+                <button
+                  class="visibility-btn"
+                  type="button"
+                  (click)="toggleTokenVisibility($event)"
+                  [attr.aria-label]="hideToken() ? 'Show token' : 'Hide token'"
+                >
+                  <mat-icon aria-hidden="true">
+                    {{ hideToken() ? 'visibility_off' : 'visibility' }}
+                  </mat-icon>
+                </button>
+              </div>
+
+              @if (form.controls.patToken.hasError('required') && form.controls.patToken.touched) {
+                <p id="patTokenError" class="field-error">
+                  Please enter your Personal Access Token.
+                </p>
+              }
+
+              <a class="pat-link" href="https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops" target="_blank" rel="noopener noreferrer">
+                <mat-icon aria-hidden="true">help_outline</mat-icon>
+                <span>How do I get a PAT token?</span>
+              </a>
+
+              @if (errorMessage()) {
+                <div class="error-banner" role="alert">
+                  <mat-icon aria-hidden="true">error_outline</mat-icon>
+                  <span>{{ errorMessage() }}</span>
+                </div>
+              }
+
+              <button class="validate-btn" type="submit" [disabled]="isSubmitting()">
+                @if (isSubmitting()) {
+                  <mat-spinner diameter="20"></mat-spinner>
+                } @else {
+                  <mat-icon aria-hidden="true">verified_user</mat-icon>
+                  <span>Validate Token &amp; Continue</span>
+                }
+              </button>
+
+              <div class="divider">
+                <span></span>
+                <p>OR</p>
+                <span></span>
+              </div>
+
+              <button class="microsoft-btn" type="button" disabled matTooltip="Coming soon">
+                <svg class="ms-logo" aria-hidden="true" viewBox="0 0 21 21" width="18" height="18">
+                  <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
+                  <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
+                  <rect x="1" y="11" width="9" height="9" fill="#00a4ef"/>
+                  <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+                </svg>
+
+                <span>Continue with Microsoft (coming soon)</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
